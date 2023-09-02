@@ -32,4 +32,4 @@ RUN npx playwright install chromium
 
 COPY . .
 
-RUN npm run build
+# RUN npm run build
