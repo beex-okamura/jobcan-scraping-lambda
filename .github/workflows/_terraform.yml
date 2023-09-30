@@ -39,6 +39,6 @@ jobs:
           terraform plan -out=plan.out
       - name: terraform apply
         run: |
-          cd $STAGE
+          cd terraform/env/$STAGE
           terraform apply -auto-approve plan.out
         if: inputs.should_apply
