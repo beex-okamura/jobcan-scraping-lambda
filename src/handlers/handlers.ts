@@ -2,7 +2,7 @@ import {type SQSEvent} from 'aws-lambda';
 import logger from '../lib/logger.ts';
 import {getBrowser} from '../lib/browser.ts';
 import {JobCanClient} from '../playwright/jobcan.ts';
-import {type Browser, type Page} from 'playwright';
+import {type Browser} from 'playwright';
 import {type UserInfo} from '../entities/user.ts';
 
 export const handler = async (event: SQSEvent) => {

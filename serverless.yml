@@ -20,12 +20,8 @@ functions:
   DownloadZacCsv:
     name: ${self:service}-download-zac-csv-${self:provider.stage}
     image:
-      name: bop-system-scraping
+      name: jobcan-scraping-lambda
       command:
-        - dist/handlers/zac.handler
+        - dist/handlers/handler.handler
       entryPoint:
         - /entry_script.sh
-    events:
-      - schedule: cron(0 22-12 1-7 * ? *)
-      - schedule: cron(0 21 * * ? *)
-      - schedule: cron(0 8 ? * 2 *)

@@ -3,4 +3,4 @@ deploy:
   ecr-repository:
     uri: ${aws:accountId}.dkr.ecr.${aws:region}.amazonaws.com/${self:service}-${self:provider.stage}:${env:SHORT_GIT_HASH}
   iam-role:
-    jobcan-basic-lambda
+    ${self:service}-basic-lambda-role

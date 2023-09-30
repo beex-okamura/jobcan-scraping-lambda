@@ -1,0 +1,51 @@
+name: serverless deploy
+on:
+  workflow_call:
+    inputs:
+      stage:
+        description: stage
+        required: true
+        type: string
+      role-to-assume:
+        description: OIDCで使用するrole
+        required: true
+        type: string
+jobs:
+  serverless-deploy:
+    name: serverless deploy
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get short SHA
+        id: vars
+        run: |
+          echo "sha_short=$(echo ${GITHUB_SHA} | cut -c1-7)" >> "$GITHUB_OUTPUT"
+          - uses: aws-actions/configure-aws-credentials@v4
+            with:
+              role-to-assume: ${{ inputs.role-to-assume }}
+              aws-region: ap-northeast-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          SHORT_GIT_HASH: ${{ steps.vars.outputs.sha_short }}
+        run: |
+          ECR_REPOSITORY_NAME=bop-system-scraping-${{ inputs.stage }}
+          ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY_NAME
+          docker build -t $ECR_REPOSITORY:$SHORT_GIT_HASH .
+          docker push $ECR_REPOSITORY:$SHORT_GIT_HASH
+  
+      - name: Deploy Serverless framework
+        env:
+          SHORT_GIT_HASH: ${{ steps.vars.outputs.sha_short }}
+        run: |
+          npm install serverless@3.35.2
+          npx sls deploy --stage ${{ inputs.stage }}
