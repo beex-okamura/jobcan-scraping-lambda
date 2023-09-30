@@ -24,7 +24,7 @@ jobs:
       id-token: write
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v2
       - name: Configure AWS Credentials

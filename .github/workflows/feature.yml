@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "*/**"
+      - "!deployment/development"
 jobs:
   static-check:
     uses: ./.github/workflows/_static_check.yml
