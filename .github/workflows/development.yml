@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/_static_check.yml
   serverless-deploy:
     uses: ./.github/workflows/_serverless.yml
-    needs: terraform-apply
+    needs: static-check
     with:
       stage: dev
       role-to-assume: arn:aws:iam::105785188161:role/oidc-github-actions-role
