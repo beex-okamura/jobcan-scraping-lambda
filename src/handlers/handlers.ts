@@ -31,5 +31,6 @@ export const workPunch = async (browser: Browser, userId: string, password: stri
 	const jobcan = new JobCanClient(page);
 	await jobcan.login(userId, password);
 
+	if (dryRun) return;
 	await jobcan.workPunch();
 };

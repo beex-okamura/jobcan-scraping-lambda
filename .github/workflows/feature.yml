@@ -1,8 +1,8 @@
-name: deploy-dev
+name: feature
 on:
   push:
     branches:
       - "*/**"
 jobs:
-  deploy:
+  static-check:
     uses: ./.github/workflows/_static_check.yml

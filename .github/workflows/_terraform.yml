@@ -1,0 +1,44 @@
+name: terraform
+on:
+  workflow_call:
+    inputs:
+      stage:
+        description: stage
+        required: true
+        type: string
+      should_apply:
+        description: should apply
+        required: true
+        type: boolean
+      role-to-assume:
+        description: OIDCで使用するrole
+        required: true
+        type: string
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      STAGE: ${{ inputs.stage}}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ inputs.role-to-assume }}
+          aws-region: ap-northeast-1
+      - name: terraform init and plan
+        run: |
+          cd $STAGE
+          terraform init
+          terraform plan -out=plan.out
+      - name: terraform apply
+        run: |
+          cd $STAGE
+          terraform apply -auto-approve plan.out
+        if: inputs.should_apply
