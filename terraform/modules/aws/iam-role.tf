@@ -14,3 +14,8 @@ resource "aws_iam_role" "jobcan-basic-lambda" {
     ]
   })
 }
+
+resource "aws_iam_role_policy_attachment" "jobcan-basic-lambda" {
+  role       = aws_iam_role.jobcan-basic-lambda.name
+  policy_arn = aws_iam_policy.jobcan-lambda-setup.arn
+}
