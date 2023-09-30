@@ -1,0 +1,12 @@
+name: development
+on:
+  push:
+    branches:
+      - "deployment/development"
+jobs:
+  terraform-apply:
+    uses: ./.github/workflows/_terraform.yml
+    with:
+      stage: dev
+      should_apply: true
+      role-to-assume: arn:aws:iam::105785188161:role/oidc-github-actions-role
