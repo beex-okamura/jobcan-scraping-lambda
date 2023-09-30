@@ -15,6 +15,9 @@ jobs:
     name: serverless deploy
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +27,8 @@ jobs:
       - name: Get short SHA
         id: vars
         run: echo "sha_short=$(echo ${GITHUB_SHA} | cut -c1-7)" >> "$GITHUB_OUTPUT"
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ inputs.role-to-assume }}
           aws-region: ap-northeast-1
