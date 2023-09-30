@@ -34,7 +34,7 @@ jobs:
           aws-region: ap-northeast-1
       - name: terraform init and plan
         run: |
-          cd $STAGE
+          cd terraform/env/$STAGE
           terraform init
           terraform plan -out=plan.out
       - name: terraform apply
