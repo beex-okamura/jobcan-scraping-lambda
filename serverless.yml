@@ -14,7 +14,7 @@ provider:
   role: ${file(deployment/serverless.${opt:stage}.yml):iam-role.batch}
   ecr:
     images:
-      bop-system-scraping:
+      jobcan-scraping-lambda:
         uri: ${file(deployment/serverless.${opt:stage}.yml):deploy.ecr-repository.uri}
 functions:
   DownloadZacCsv:
