@@ -2,7 +2,7 @@ deploy:
   bucket-name: serverless-deploy-bucket
   ecr-repository:
     uri: ${aws:accountId}.dkr.ecr.${aws:region}.amazonaws.com/${self:service}-${self:provider.stage}:${env:SHORT_GIT_HASH}
-  role:
+  iam-role:
     ${self:service}-basic-lambda-role
   environment:
     STAGE: ${self:provider.stage}
