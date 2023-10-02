@@ -1,9 +1,12 @@
 import {type SQSEvent} from 'aws-lambda';
+import {type Browser} from 'playwright';
 import logger from '../lib/logger.ts';
 import {getBrowser} from '../lib/browser.ts';
+import {getEnvironments} from '../lib/environments.ts';
 import {JobCanClient} from '../playwright/jobcan.ts';
-import {type Browser} from 'playwright';
 import {type UserInfo} from '../entities/user.ts';
+
+const {dryRun} = getEnvironments();
 
 export const handler = async (event: SQSEvent) => {
 	const messages = event.Records.map(e => JSON.parse(e.body) as UserInfo);
@@ -16,7 +19,7 @@ export const handler = async (event: SQSEvent) => {
 			const {userId, password} = message;
 
 			// eslint-disable-next-line no-await-in-loop
-			await workPunch(browser, userId, password);
+			await workPunch(browser, userId, password, dryRun);
 		}
 	} finally {
 		await browser.close();

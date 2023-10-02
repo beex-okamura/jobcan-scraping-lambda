@@ -6,3 +6,5 @@ iam-role: arn:aws:iam::${aws:accountId}:role/${self:custom.serviceName}-basic-la
 environment:
   STAGE: ${self:provider.stage}
   UPLOAD_BUCKET: ${self:custom.serviceName}-scraping-capture
+  DOWNLOAD_DIR: "/tmp"
+  DRY_RUN: "false"
