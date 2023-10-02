@@ -2,7 +2,7 @@ service: jobcan-scraping-lambda
 frameworkVersion: "3"
 
 custom:
-  serviceName: jobcan-scraping-${self:provider.stage}
+  serviceName: jobcan-${self:provider.stage}
 
 provider:
   name: aws
