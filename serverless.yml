@@ -18,7 +18,7 @@ provider:
         uri: ${file(deployment/serverless.${opt:stage}.yml):deploy.ecr-repository.uri}
 functions:
   DownloadZacCsv:
-    name: ${self:service}-download-zac-csv-${self:provider.stage}
+    name: ${self:custom.serviceName}-download-zac-csv
     image:
       name: jobcan-scraping-lambda
       command:
