@@ -8,3 +8,4 @@ environment:
   UPLOAD_BUCKET: ${self:custom.serviceName}-scraping-capture
   DOWNLOAD_DIR: "/tmp"
   DRY_RUN: "false"
+  HEADLESS_MODE: "true"

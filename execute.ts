@@ -2,5 +2,10 @@ import {getBrowser} from './src/lib/browser.ts';
 import {workPunch} from './src/handlers/handlers.ts';
 
 const browser = await getBrowser();
+const { TEST_USER_ID, TEST_USER_PASSWORD } = process.env;
 
-await workPunch(browser, 'shuji.okamura@beex-inc.com', 'fjX6X6vmd78buq');
+if (!TEST_USER_ID || !TEST_USER_PASSWORD) {
+  throw new Error('TEST_USER_ID or TEST_USER_PASSWORD is not set');
+}
+
+await workPunch(browser, TEST_USER_ID, TEST_USER_PASSWORD);
