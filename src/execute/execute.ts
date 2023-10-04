@@ -1,5 +1,5 @@
-import {getBrowser} from './src/lib/browser.ts';
-import {workPunch} from './src/handlers/handlers.ts';
+import {getBrowser} from '../lib/browser.ts';
+import {workPunch} from '../handlers/handlers.ts';
 
 const browser = await getBrowser();
 const { TEST_USER_ID, TEST_USER_PASSWORD } = process.env;
