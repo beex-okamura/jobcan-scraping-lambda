@@ -42,4 +42,4 @@ COPY ./entry_script.sh /entry_script.sh
 RUN chmod 755 /entry_script.sh
 ENTRYPOINT [ "/bin/bash", "/entry_script.sh" ]
 
-CMD ["dist/handler/handler.handler"]
+CMD ["dist/handlers/handlers.handler"]
