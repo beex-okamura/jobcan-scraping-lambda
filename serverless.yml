@@ -27,6 +27,6 @@ functions:
         - /entry_script.sh
     events:
       - sqs:
-          arn: ${file(deployment/serverless.${opt:stage}.yml):jobcan-scraping-lambda-queue}
+          arn: ${file(deployment/serverless.${opt:stage}.yml):queue.jobcan-scraping-lambda-queue}
           maximumConcurrency: 2
           batchSize: 1
