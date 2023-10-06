@@ -27,7 +27,8 @@
         "streetsidesoftware.code-spell-checker",
         "me-dutour-mathieu.vscode-github-actions",
         "github.copilot",
-        "rafwilinski.serverless-vscode-snippets"
+        "rafwilinski.serverless-vscode-snippets",
+        "hashicorp.terraform"
       ]
     }
   },

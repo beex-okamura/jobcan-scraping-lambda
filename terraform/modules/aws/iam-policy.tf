@@ -24,3 +24,24 @@ resource "aws_iam_policy" "jobcan-lambda-setup" {
     ]
   })
 }
+
+resource "aws_iam_policy" "jobcan-scraping-sqs-lambda-queue-policy" {
+  name = "${var.service_name}-scraping-sqs-lambda-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes",
+        ]
+        Effect = "Allow"
+        Resource = [
+          aws_sqs_queue.sqs_jobcan_scraping_lambda_queue.arn,
+        ]
+      }
+    ]
+  })
+}

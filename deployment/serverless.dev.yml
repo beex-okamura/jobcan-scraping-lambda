@@ -9,3 +9,5 @@ environment:
   DOWNLOAD_DIR: "/tmp"
   DRY_RUN: "false"
   HEADLESS_MODE: "true"
+queue:
+  jobcan-scraping-lambda-queue: arn:aws:sqs:${aws:region}:${aws:accountId}:${self:custom.serviceName}-scraping-lambda-queue
