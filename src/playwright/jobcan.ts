@@ -1,9 +1,9 @@
 import {type Page} from 'playwright';
 import {format} from 'date-fns';
-import logger from '../lib/logger.ts';
+import logger from '../lib/logger.js';
 import path from 'path';
-import {getEnvironments} from '../lib/environments.ts';
-import { addPrefixToS3Path, uploadToS3 } from '../lib/s3.ts';
+import {getEnvironments} from '../lib/environments.js';
+import { addPrefixToS3Path, uploadToS3 } from '../lib/s3.js';
 
 const nowDate = new Date();
 const {uploadBucket} = getEnvironments();

@@ -1,6 +1,6 @@
 import {chromium} from 'playwright';
-import logger from './logger.ts';
-import {getEnvironments} from '../lib/environments.ts';
+import logger from './logger.js';
+import {getEnvironments} from '../lib/environments.js';
 
 const {headlessMode} = getEnvironments();	
 

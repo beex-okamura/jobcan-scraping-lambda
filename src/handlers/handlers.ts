@@ -1,10 +1,10 @@
 import {type SQSEvent} from 'aws-lambda';
 import {type Browser} from 'playwright';
-import logger from '../lib/logger.ts';
-import {getBrowser} from '../lib/browser.ts';
-import {getEnvironments} from '../lib/environments.ts';
-import {JobCanClient} from '../playwright/jobcan.ts';
-import {type UserInfo} from '../entities/user.ts';
+import logger from '../lib/logger.js';
+import {getBrowser} from '../lib/browser.js';
+import {getEnvironments} from '../lib/environments.js';
+import {JobCanClient} from '../playwright/jobcan.js';
+import {type UserInfo} from '../entities/user.js';
 
 const {dryRun} = getEnvironments();
 
