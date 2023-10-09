@@ -20,9 +20,11 @@ export const handler = async (event: SQSEvent) => {
 
 			// eslint-disable-next-line no-await-in-loop
 			await workPunch(browser, userId, password, dryRun);
+			logger.debug('work punch finished');
 		}
 	} finally {
 		await browser.close();
+		logger.debug('browser closed');
 	}
 
 	logger.info('end jobcan scraping');
@@ -35,8 +37,18 @@ export const workPunch = async (browser: Browser, userId: string, password: stri
 	const jobcan = new JobCanClient(page);
 	logger.debug('jobcan client created');
 	
-	await jobcan.login(userId, password);
+	try {
+		await jobcan.login(userId, password);
 
-	if (dryRun) return;
-	await jobcan.workPunch();
-};
+		if (dryRun === false) {
+			await jobcan.workPunch();
+		}
+		logger.debug('work punch finished');	
+	} catch (err) {
+		logger.error(err);
+	} finally {
+		await page.close();
+		logger.debug('page closed');
+	}
+}
+	

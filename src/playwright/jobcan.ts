@@ -25,15 +25,16 @@ export class JobCanClient {
 
 		await this.page.waitForResponse(
 			resp => resp.url()
-				.includes('/account/profile/atd_admin_link_disp') && resp.status() === 200,
-				{timeout: 500}
+				.includes('/account/profile/atd_admin_link_disp') && resp.status() === 200
 		);
+		logger.debug('login finished');
 	}
 
 	async workPunch() {
 		await this.page.goto('https://ssl.jobcan.jp/jbcoauth/login');
+		logger.debug('work punch page opened');
 
-		return this.page.innerText('#working_status');
+		await this.page.innerText('#working_status');
 	}
 
 	async saveSnapshotAndThrowError(err: Error) {
