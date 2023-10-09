@@ -16,13 +16,17 @@ export class JobCanClient {
 
 	async login(userId: string, password: string) {
 		await this.page.goto('https://id.jobcan.jp/users/sign_in');
+		logger.debug('login page opened');
+
 		await this.page.fill('#user_email', userId);
 		await this.page.fill('#user_password', password);
 		await this.page.click('input[type="submit"]');
+		logger.debug('login button clicked');
 
 		await this.page.waitForResponse(
 			resp => resp.url()
 				.includes('/account/profile/atd_admin_link_disp') && resp.status() === 200,
+				{timeout: 500}
 		);
 	}
 

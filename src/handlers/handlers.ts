@@ -30,8 +30,11 @@ export const handler = async (event: SQSEvent) => {
 
 export const workPunch = async (browser: Browser, userId: string, password: string, dryRun = false) => {
 	const page = await browser.newPage();
+	logger.debug('new page created');
 
 	const jobcan = new JobCanClient(page);
+	logger.debug('jobcan client created');
+	
 	await jobcan.login(userId, password);
 
 	if (dryRun) return;
