@@ -28,5 +28,5 @@ functions:
     events:
       - sqs:
           arn: ${file(deployment/serverless.${opt:stage}.yml):queue.jobcan-scraping-lambda-queue}
-          maximumConcurrency: 2
-          batchSize: 1
+          batchSize: 10
+          functionResponseType: ReportBatchItemFailures
