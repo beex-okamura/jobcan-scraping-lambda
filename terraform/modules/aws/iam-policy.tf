@@ -45,3 +45,21 @@ resource "aws_iam_policy" "jobcan-scraping-sqs-lambda-queue-policy" {
     ]
   })
 }
+
+resource "aws_iam_policy" "jobcan-scraping-s3-scraping-capture-policy" {
+  name = "${var.service_name}-scraping-s3-scraping-capture-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:PutObject"
+        ]
+        Effect = "Allow"
+        Resource = [
+          aws_s3_bucket.bucket_scraping_capture.arn,
+        ]
+      }
+    ]
+  })
+}

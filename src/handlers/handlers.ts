@@ -27,6 +27,7 @@ export const handler = async (event: SQSEvent) => {
 			await workPunch(browser, userId, password, dryRun);
 			logger.debug('work punch finished');
 		} catch (err) {
+			logger.error(err);
 			failedMessageIds.push(messageId);
 		} finally {
 			await browser.close();
