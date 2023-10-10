@@ -1,12 +1,13 @@
-import {type Page} from 'playwright';
-import {format} from 'date-fns';
+import { type Page } from 'playwright';
+import { format } from 'date-fns';
 import logger from '../lib/logger.js';
 import path from 'path';
-import {getEnvironments} from '../lib/environments.js';
+import { getEnvironments } from '../lib/environments.js';
 import { addPrefixToS3Path, uploadToS3 } from '../lib/s3.js';
+import { PunchResponse } from '../entities/jobcan.js';
 
 const nowDate = new Date();
-const {uploadBucket,downloadDir} = getEnvironments();
+const { uploadBucket, downloadDir } = getEnvironments();
 
 export class JobCanClient {
 	constructor(private readonly page: Page) { }
@@ -15,9 +16,11 @@ export class JobCanClient {
 		await this.page.goto('https://id.jobcan.jp/users/sign_in');
 		logger.debug('login page opened');
 
-		await this.page.fill('#user_email', userId);
-		await this.page.fill('#user_password', password);
-		await this.page.click('input[type="submit"]');
+		await this.page.locator('#user_email').waitFor();
+
+		await this.page.locator('#user_email').fill(userId);
+		await this.page.locator('#user_password').fill(password);
+		await this.page.locator('input[type="submit"]').click();
 		logger.debug('login button clicked');
 
 		await this.page.waitForResponse(
@@ -31,7 +34,20 @@ export class JobCanClient {
 		await this.page.goto('https://ssl.jobcan.jp/jbcoauth/login');
 		logger.debug('work punch page opened');
 
-		await this.page.innerText('#working_status');
+		await this.page.locator('#adit-button-push').waitFor();
+		await this.page.locator('#adit-button-push').click();
+
+		await this.page.waitForResponse(
+			async resp => {
+				const body = (await resp.body()).toString();
+				logger.debug(`work punch response body: ${body}`);
+
+				const { result } = JSON.parse(body) as PunchResponse;
+
+				return resp.url()
+					.includes('/employee/index/adit') && resp.status() === 200 && result === 1
+			}
+		);
 	}
 
 	async saveSnapshotAndThrowError(err: Error) {
