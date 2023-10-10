@@ -6,13 +6,10 @@ import {getEnvironments} from '../lib/environments.ts';
 import { addPrefixToS3Path, uploadToS3 } from '../lib/s3.ts';
 
 const nowDate = new Date();
-const {uploadBucket} = getEnvironments();
+const {uploadBucket,downloadDir} = getEnvironments();
 
 export class JobCanClient {
-	constructor(
-		private readonly page: Page,
-		private readonly downloadDir?: string,
-	) { }
+	constructor(private readonly page: Page) { }
 
 	async login(userId: string, password: string) {
 		await this.page.goto('https://id.jobcan.jp/users/sign_in');
@@ -36,7 +33,7 @@ export class JobCanClient {
 		logger.error(err.stack);
 		const snapshotName = `${format(nowDate, 'yyyyMMdd_hhmmss')}.png`;
 		const body = await this.page.screenshot({
-			path: path.join(this.downloadDir ?? '', snapshotName),
+			path: path.join(downloadDir, snapshotName),
 			type: 'png',
 		});
 		if (uploadBucket !== undefined) {
