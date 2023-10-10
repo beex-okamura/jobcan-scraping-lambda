@@ -62,7 +62,7 @@ export const workPunch = async (browser: Browser, userId: string, password: stri
 		}
 		throw err;
 	} finally {
-		// await page.close();
+		await page.close();
 		logger.debug('page closed');
 	}
 }
