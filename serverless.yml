@@ -1,0 +1,27 @@
+service: jobcan-scraping-lambda
+frameworkVersion: "3"
+
+custom:
+  serviceName: jobcan-${self:provider.stage}
+
+provider:
+  name: aws
+  stage: ${opt:stage, "dev"}
+  region: ap-northeast-1
+  deploymentBucket: ${file(deployment/serverless.${opt:stage}.yml):deploy.bucket-name}
+  environment: ${file(deployment/serverless.${opt:stage}.yml):environment}
+  timeout: 300
+  role: ${file(deployment/serverless.${opt:stage}.yml):iam-role}
+  ecr:
+    images:
+      jobcan-scraping-lambda:
+        uri: ${file(deployment/serverless.${opt:stage}.yml):deploy.ecr-repository.uri}
+functions:
+  DownloadZacCsv:
+    name: ${self:service}-download-zac-csv-${self:provider.stage}
+    image:
+      name: jobcan-scraping-lambda
+      command:
+        - dist/handlers/handler.handler
+      entryPoint:
+        - /entry_script.sh
