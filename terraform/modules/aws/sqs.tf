@@ -22,7 +22,7 @@ resource "aws_sqs_queue" "sqs_jobcan_scraping_lambda_queue" {
   redrive_policy             = <<EOF
 {
   "deadLetterTargetArn": "${aws_sqs_queue.sqs_jobcan_scraping_lambda_queue_dead_letters.arn}",
-  "maxReceiveCount": 5
+  "maxReceiveCount": 1
 }
 EOF
 }

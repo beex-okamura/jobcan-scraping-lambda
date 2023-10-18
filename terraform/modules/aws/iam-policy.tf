@@ -57,7 +57,7 @@ resource "aws_iam_policy" "jobcan-scraping-s3-scraping-capture-policy" {
         ]
         Effect = "Allow"
         Resource = [
-          aws_s3_bucket.bucket_scraping_capture.arn,
+          "${aws_s3_bucket.bucket_scraping_capture.arn}/*",
         ]
       }
     ]

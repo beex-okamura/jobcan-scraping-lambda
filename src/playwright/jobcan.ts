@@ -16,8 +16,6 @@ export class JobCanClient {
 		await this.page.goto('https://id.jobcan.jp/users/sign_in');
 		logger.debug('login page opened');
 
-		await this.page.locator('#user_email').waitFor();
-
 		await this.page.locator('#user_email').fill(userId);
 		await this.page.locator('#user_password').fill(password);
 		await this.page.locator('input[type="submit"]').click();
@@ -34,7 +32,6 @@ export class JobCanClient {
 		await this.page.goto('https://ssl.jobcan.jp/jbcoauth/login');
 		logger.debug('work punch page opened');
 
-		await this.page.locator('#adit-button-push').waitFor();
 		await this.page.locator('#adit-button-push').click();
 
 		await this.page.waitForResponse(
